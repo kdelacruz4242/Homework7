@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from hashtable import HashTable
 timestamps = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 distances = [20, 21, 22, 23, 24, 25]
-
+#
 #generates a csv files
 with open('data.csv', 'w', newline='') as file:
     writer = csv.writer(file)
