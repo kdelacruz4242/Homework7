@@ -1,5 +1,3 @@
-from datetime import datetime
-
 class HashEntry:
     def __init__(self, key, value):
         self.key = key  # timestamp
