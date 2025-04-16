@@ -1,15 +1,31 @@
-class HashInit:
+from datetime import datetime
 
+class HashEntry:
     def __init__(self, key, value):
-        self.key = value
-        self.value = value
+        self.key = key  # timestamp
+        self.value = value  # distance
 
 class HashTable:
-
-    def __init__(self, size = 20):
+    def __init__(self, size=20):
         self.size = size
-        self.value = value
+        self.table = [None] * self.size
 
-   def _hash(self, key):
+    def _hash(self, key):
         return hash(key) % self.size
 
+    def insert(self, key, value):
+        index = self._hash(key)
+        original_index = index
+
+
+        while self.table[index] is not None:
+            index = (index + 1) % self.size
+            if index == original_index:
+                print("Hashtable is full")
+                return
+
+        self.table[index] = HashEntry(key, value)
+
+    def get_all(self):
+        """Returns a list of (timestamp, distance) tuples."""
+        return [(entry.key, entry.value) for entry in self.table if entry is not None]

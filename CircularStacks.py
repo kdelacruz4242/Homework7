@@ -2,9 +2,10 @@ import serial
 import time
 from distance import Distance
 from stack import CircularStack
+from hashtable import HashTable
 
 #GND -> GND
-#Echo -> Digital Pin 6
+#Echo -> Digital Pin 6 with 10k resistor between
 #Trig -> Digital Pin 7
 #VCC -> 5V
 
@@ -13,6 +14,8 @@ arduino_port = 'COM7'
 baud_rate = 9600
 
 stack = CircularStack()
+hashtable = HashTable()
+count = 0
 
 try:
     # Establish connection with Arduino
@@ -20,12 +23,15 @@ try:
     time.sleep(2)  # Allow time for connection to establish
     print("Connected to Arduino. Reading Ultrasonic Sensor data...")
 
-    while True:
+    while count < 15:
         if arduino.in_waiting > 0:
             distance = arduino.readline().decode('utf-8').strip()
             if distance:
                 new_distance = Distance(distance)
                 stack.push(new_distance)
+                hashtable.insert(new_distance.timestamp, float(new_distance.distance))
+                count += 1
+
                 print(f"Distance: {distance} cm")
                 stack.print_stack()
         time.sleep(2)  # Read every 2 seconds

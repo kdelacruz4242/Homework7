@@ -1,16 +1,18 @@
 import csv
 import matplotlib.pyplot as plt
+from distance import Distance
 from hashtable import HashTable
-timestamps = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-distances = [20, 21, 22, 23, 24, 25]
-#
+
+ht = HashTable()
+data = ht.get_all()
+data.sort()  # sort by timestamp
+
 #generates a csv files
-with open('data.csv', 'w', newline='') as file:
+with open('distance_data.csv', 'w', newline='') as file:
     writer = csv.writer(file)
-    for timestamp in timestamps:
-        writer.writerow([timestamp])
-    for distance in distances:
-        writer.writerow([distance])
+    writer.writerow(["Timestamp", "Distance (cm)"])
+    for t, d in HashTable.get_all():
+        writer.writerow([t, d])
 
 #reads from the csv file
 with open('data.csv', 'r') as file:
